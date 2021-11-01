@@ -1,4 +1,12 @@
-import { takeEvery, put, all, delay } from "redux-saga/effects";
+import { takeEvery, takeLatest, put, all, delay } from "redux-saga/effects";
+
+function apiGet(text) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(text + " topissimo");
+    }, 2000);
+  });
+}
 
 function* asyncAddTodo(action) {
   yield delay(2000);
@@ -7,5 +15,5 @@ function* asyncAddTodo(action) {
 }
 
 export default function* root() {
-  yield all([takeEvery("ASYNC_ADD_TODO", asyncAddTodo)]);
+  yield all([takeLatest("ASYNC_ADD_TODO", asyncAddTodo)]);
 }
