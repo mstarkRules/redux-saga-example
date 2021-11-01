@@ -11,23 +11,38 @@ import {
 function apiGet(text, length) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(text + " topissimo" + length);
+      resolve([
+        {
+          id: 1,
+          text: "Fazendo café",
+        },
+        {
+          id: 2,
+          text: "Fazendo café açucar",
+        },
+        {
+          id: 3,
+          text: "Fazendo café e leite",
+        },
+        {
+          id: 4,
+          text: "Fazendo café preto",
+        },
+      ]);
     }, 2000);
   });
 }
 
-function* asyncAddTodo(action) {
+function* getTodoList() {
   try {
-    const todos = yield select((state) => state.todos);
+    const response = yield call(apiGet);
 
-    const response = yield call(apiGet, action.payload.text, todos.length);
-
-    yield put({ type: "ADD_TODO", payload: { text: response } });
+    yield put({ type: "SUCCESS_TODO_LIST", payload: { data: response } });
   } catch (err) {
-    yield put({ type: "ERROR" });
+    yield put({ type: "FAILURE_TODO_LIST" });
   }
 }
 
 export default function* root() {
-  yield all([takeLatest("ASYNC_ADD_TODO", asyncAddTodo)]);
+  yield all([takeLatest("REQUEST_TODO_LIST", getTodoList)]);
 }
