@@ -1,4 +1,11 @@
-import { takeEvery, takeLatest, put, all, delay } from "redux-saga/effects";
+import {
+  takeEvery,
+  takeLatest,
+  call,
+  put,
+  all,
+  delay,
+} from "redux-saga/effects";
 
 function apiGet(text) {
   return new Promise((resolve, reject) => {
@@ -9,9 +16,9 @@ function apiGet(text) {
 }
 
 function* asyncAddTodo(action) {
-  yield delay(2000);
+  const response = yield call(apiGet, action.payload.text);
 
-  yield put({ type: "ADD_TODO", payload: { text: action.payload.text } });
+  yield put({ type: "ADD_TODO", payload: { text: response } });
 }
 
 export default function* root() {
