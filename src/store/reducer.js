@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   error: false,
 };
 
-export default function todos(state = [], action) {
+export default function todos(state = INITIAL_STATE, action) {
   switch (action.type) {
     case "REQUEST_TODO_LIST":
       return { ...state, loading: true };

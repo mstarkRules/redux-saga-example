@@ -9,8 +9,9 @@ const TodoList = ({ todos, requestTodoList }) => {
   return (
     <div>
       <ul>
-        {todos.data &&
-          todos.data.map((todo) => <li key={todo.id}>{todo.text}</li>)}
+        {todos.data.map((todo) => (
+          <li key={todo.id}>{todo.text}</li>
+        ))}
       </ul>
 
       <button onClick={() => requestTodoList()}>Carregar tarefas</button>
